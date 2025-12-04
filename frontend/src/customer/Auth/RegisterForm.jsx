@@ -1,0 +1,183 @@
+import React, { useEffect, useState } from "react";
+import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { fetchUser, registerUser } from "../../redux/slices/slice";
+
+
+
+const RegisterForm = ({onClose}) => {
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
+  useEffect(()=>{
+    if(jwt){
+      dispatch(fetchUser());
+    }
+  },[jwt, dispatch]);
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: ""
+  });
+  const { loading, error } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.firstName.trim()) newErrors.firstName = "firstName is required";
+    if (!formData.email.trim()) newErrors.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(formData.email))
+      newErrors.email = "Enter a valid email";
+    if (formData.password.length < 6)
+      newErrors.password = "Password must be at least 6 characters";
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    if (!validate()) return;
+    // try {
+    //   const resultAction =await dispatch(registerUser(formData)).unwrap();
+    // if(registerUser.fulfilled.match(resultAction)){
+    //   console.log("Registration successful: ", resultAction.payload);
+      
+    //   navigate("/cart");
+    // }else{
+    //   console.log("Registration failed: ", resultAction.payload);
+    // }
+    // } catch (error) {
+    //   console.error("Failure in registration: ", error.message);
+    // }
+    try {
+    console.log("🟡 Dispatching registerUser...");
+    const user = await dispatch(registerUser(formData)).unwrap();
+    console.log("🟢 Registration success:", user);
+
+    if(onClose) onClose();
+     navigate("/");
+    // console.alert("SIgn is done");
+  } catch (err) {
+    console.error("🔴 Registration failed:", err);
+  }
+    // 👉 Here you can call your API to register user
+  };
+ 
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        maxWidth: 400,
+        mx: "auto",
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        p: 3,
+        borderRadius: 2,
+        boxShadow: 3,
+        bgcolor: "background.paper",
+      }}
+    >
+      <Typography variant="h5" fontWeight={600} textAlign="center" gutterBottom>
+        Create an Account
+      </Typography>
+
+      <TextField
+        label="First Name"
+        name="firstName"
+        value={formData.firstName}
+        onChange={handleChange}
+        error={!!errors.firstName}
+        helperText={errors.firstName}
+        fullWidth
+      />
+         <TextField
+        label="Last Name"
+        name="lastName"
+        value={formData.lastName}
+        onChange={handleChange}
+        error={!!errors.lastName}
+        helperText={errors.lastName}
+        fullWidth
+        />
+      <TextField
+        label="Email Address"
+        name="email"
+        type="email"
+        value={formData.email}
+        onChange={handleChange}
+        error={!!errors.email}
+        helperText={errors.email}
+        fullWidth
+      />
+
+      <TextField
+        label="Password"
+        name="password"
+        type={showPassword ? "text" : "password"}
+        value={formData.password}
+        onChange={handleChange}
+        error={!!errors.password}
+        helperText={errors.password}
+        fullWidth
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={() => setShowPassword((prev) => !prev)}>
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
+
+     
+
+      <Button
+        variant="contained"
+        size="large"
+        sx={{ mt: 1, borderRadius: 2 }}
+        onClick={handleSubmit}
+      >
+        {loading?"Registering...":"Register"}
+      </Button>
+        {error && <Typography color="error">{error}</Typography>}
+        
+      <Typography variant="body2" textAlign="center">
+        Already have an account?{" "}
+        <span
+          style={{ color: "#1976d2", cursor: "pointer", fontWeight: 500 }}
+          onClick={() => navigate("/login")}
+        >
+          Sign in
+        </span>
+      </Typography>
+    </Box>
+  );
+};
+
+export default RegisterForm;
+
+
+
+
+
