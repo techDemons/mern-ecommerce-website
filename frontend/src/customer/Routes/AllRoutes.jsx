@@ -21,8 +21,7 @@ const AllRoute = () => {
         <Route path={"/"} element={<Home/>}></Route>
         <Route path={"/profile"} element={<ProfilePage/>}></Route>
         <Route path={"/cart"} element={<Cart/>}></Route>
-        {/* <Route path="/product/:levelOne/:levelTwo/:levelThree" element={<Product />} /> */}
-        {/* Product base page (no categories) */}
+        
         <Route path="/product" element={<Product />} />
 
         {/* One-level category */}
@@ -45,16 +44,6 @@ const AllRoute = () => {
 
 
       </Routes>
-       {/* <div><Home/></div> */}
-      {/* <Product/> */}
-      {/* <ProductDetails/> */}
-      {/* <Footer/> */} 
-      {/* <Cart/> */}
-
-      {/* <Checkout/> */}
-      {/* <OrderStatus/> */}
-     {/* <OrderDetails/>
-    </div> */}
     </div>
   )
 }

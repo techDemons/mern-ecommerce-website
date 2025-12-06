@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 const OrderCard = () => {
 
   const navigate = useNavigate();
-  // const {order} = useSelector((state)=>state.orders);
-  // console.log("orders", order);
+  
   return (
     <div onClick={()=>navigate(`/account/order/${69}`)} className="max-w-4xl w-[120rem] mx-auto bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl mt-5 transition-shadow duration-300 overflow-hidden">
       <div className="p-6 ">

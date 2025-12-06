@@ -56,18 +56,7 @@ const RegisterForm = ({onClose}) => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     if (!validate()) return;
-    // try {
-    //   const resultAction =await dispatch(registerUser(formData)).unwrap();
-    // if(registerUser.fulfilled.match(resultAction)){
-    //   console.log("Registration successful: ", resultAction.payload);
-      
-    //   navigate("/cart");
-    // }else{
-    //   console.log("Registration failed: ", resultAction.payload);
-    // }
-    // } catch (error) {
-    //   console.error("Failure in registration: ", error.message);
-    // }
+   
     try {
     console.log("🟡 Dispatching registerUser...");
     const user = await dispatch(registerUser(formData)).unwrap();
