@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser())
 app.use(cors({
-  origin: ["http://localhost:5173","http://localhost:5174"], 
+  origin: ["http://localhost:5173","http://localhost:5174","https://mern-ecommerce-website-rouge.vercel.app/"], 
   credentials: true               
 }));
 
@@ -46,6 +46,6 @@ app.get("/", (req, res)=>{
     return res.send("Welcome to ecommerce website");
 });
 
-// app.listen(PORT, ()=>{
-//     console.log(`Server started at ${PORT}`);
-// })
+app.listen(PORT, ()=>{
+    console.log(`Server started at ${PORT}`);
+})
