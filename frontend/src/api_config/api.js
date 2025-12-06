@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_BASE_URL = "http://localhost:6969";
+export const API_BASE_URL = "https://mern-ecommerce-website-6-0f55.onrender.com";
 
 
 export const api = axios.create({
