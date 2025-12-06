@@ -7,7 +7,7 @@ import Product from '../components/Product/Product';
 import ProductDetails from '../components/ProductDetails/ProductDetails';
 import NotFoundPage from '../NotFoundPage';
 import Home from '../pages/homePage/Home';
-import PaymentSuccess from '../components/payment/paymentSuccess';
+import PaymentSuccess from '../components/payment/paymentSuccess.jsx ';
 import ProfilePage from '../pages/homePage/ProfilePage';
 
 const AllRoute = () => {
