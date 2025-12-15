@@ -46,6 +46,6 @@ app.get("/", (req, res)=>{
     return res.send("Welcome to ecommerce website");
 });
 
-// app.listen(PORT, ()=>{
-//     console.log(`Server started at ${PORT}`);
-// })
+app.listen(PORT, ()=>{
+    console.log(`Server started at ${PORT}`);
+})
